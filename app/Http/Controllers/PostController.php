@@ -12,8 +12,12 @@ class PostController extends Controller
         $this->middleware('auth'); //con esto, al tratar de entrar aqui si no se ha echo login, te llevara a la pagina de login
     }
     public function index(User $user){
+
+        $posts = Post::where('user_id', $user->id)->get();
+
         return view('dashboard', [
-            'user' => $user
+            'user' => $user,
+            'posts' => $posts,
         ]);
     }
 

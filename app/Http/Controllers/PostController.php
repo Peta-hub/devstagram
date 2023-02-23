@@ -9,11 +9,11 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth'); //con esto, al tratar de entrar aqui si no se ha echo login, te llevara a la pagina de login
+        $this->middleware('auth')->except(['show', 'index']); //con esto, al tratar de entrar aqui si no se ha echo login, te llevara a la pagina de login
     }
     public function index(User $user){
 
-        $posts = Post::where('user_id', $user->id)->get();
+        $posts = Post::where('user_id', $user->id)->paginate(20); //existe otra forma para que solo sea el boton siguiente
 
         return view('dashboard', [
             'user' => $user,
@@ -54,5 +54,18 @@ class PostController extends Controller
         ]);
 
        return redirect()->route('posts.index', auth()->user()->username);
+    }
+
+    public function show(User $user, Post $post){
+        return view('posts.show', ['post' => $post, 'user' => $user]);
+    }
+
+    public function destroy(Post $post){
+
+        $this->authorize('delete', $post);
+        $post->delete();
+
+        return redirect()->route('posts.index', auth()->user()->username);
+
     }
 }

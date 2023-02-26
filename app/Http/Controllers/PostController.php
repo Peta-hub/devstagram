@@ -14,7 +14,7 @@ class PostController extends Controller
     }
     public function index(User $user){
 
-        $posts = Post::where('user_id', $user->id)->paginate(20); //existe otra forma para que solo sea el boton siguiente
+        $posts = Post::where('user_id', $user->id)->latest()->paginate(20); //existe otra forma para que solo sea el boton siguiente
 
         return view('dashboard', [
             'user' => $user,

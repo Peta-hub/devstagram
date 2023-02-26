@@ -10,6 +10,7 @@ use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\FollowerController;
+use \App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,9 +22,7 @@ use App\Http\Controllers\FollowerController;
 |
 */
 
-//Route::get('/', function () {
-//    return view('principal');
-//});
+Route::get('/', HomeController::class)->name('home');
 
 
 
